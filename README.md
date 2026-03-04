@@ -18,7 +18,19 @@ A personal blog built with [Astro](https://astro.build), featuring [Keystatic](h
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
+- npm
+
+### Check your environment
+
+**Check Node.js version**
+```bash
+node -v
+```
+
+**Check npm version**
+```bash
+npm -v
+```
 
 ### Installation
 
@@ -228,4 +240,5 @@ MIT
 ## Credits
 
 Built with [Astro](https://astro.build), [Keystatic](https://keystatic.com), and [Tailwind CSS](https://tailwindcss.com).
+
 

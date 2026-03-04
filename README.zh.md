@@ -24,8 +24,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/OtavioLeonardo/no-signal.git
-cd no-signal
+git clone https://github.com/OtavioLeonardo/NoSignal-Blog.git
+cd NoSignal-Blog
 
 # 安装依赖
 npm install

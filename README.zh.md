@@ -18,7 +18,7 @@
 ### 前置要求
 
 - Node.js 18+
-- npm 或 yarn
+- npm
 
 ### 安装
 

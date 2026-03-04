@@ -24,8 +24,8 @@ A personal blog built with [Astro](https://astro.build), featuring [Keystatic](h
 
 ```bash
 # Clone the repository
-git clone https://github.com/OtavioLeonardo/no-signal.git
-cd no-signal
+git clone https://github.com/OtavioLeonardo/NoSignal-Blog.git
+cd NoSignal-Blog
 
 # Install dependencies
 npm install
@@ -228,3 +228,4 @@ MIT
 ## Credits
 
 Built with [Astro](https://astro.build), [Keystatic](https://keystatic.com), and [Tailwind CSS](https://tailwindcss.com).
+

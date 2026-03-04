@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import PostLayout from '../../layouts/post.astro';
+// 1. 删除任何关于 readingTime 的 import
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+---
+<PostLayout 
+  frontmatter={post.data} 
+  headings={headings}
+>
+  <Content />
+</PostLayout>

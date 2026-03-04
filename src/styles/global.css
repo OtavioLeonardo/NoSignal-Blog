@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --- 1. Base Layer: 苹果风格全局背景 --- */
+@layer base {
+    body {
+        @apply bg-[#F5F5F7] text-[#1D1D1F] antialiased;
+        /* ✅ 新增：防止横向溢出，但使用 clip 以保护 sticky 上下文 */
+        overflow-x: clip;
+    }
+
+    .dark body {
+        /* 深色模式：深空灰 (macOS 风格)，比纯黑更有质感 */
+        @apply bg-[#000000] text-[#F5F5F7];
+    }
+}
+
+/* --- 2. Utilities Layer: 你的自定义代码高亮 (完整保留) --- */
+@layer utilities {
+    .content pre {
+        @apply p-0;
+    }
+
+    .content code {
+        @apply overflow-x-auto;
+    }
+
+    .content [data-rehype-pretty-code-figure] code {
+        @apply p-0;
+    }
+
+    .content pre>code span[data-line] {
+        @apply border-l-8 border-transparent px-2;
+    }
+
+    .content pre>code span:first-of-type {
+        @apply rounded-t-lg pt-2;
+    }
+
+    .content pre>code span:last-of-type {
+        @apply rounded-b-lg pb-2;
+    }
+
+    .content pre>code .highlighted {
+        @apply border-l-8 !border-gray-300/60 bg-gray-200/5;
+    }
+
+    .content pre>code[data-line-numbers] {
+        counter-reset: line;
+    }
+
+    .content pre>code[data-line-numbers]>span[data-line]::before {
+        counter-increment: line;
+        content: counter(line);
+        @apply mr-8 inline-block w-4 text-left text-[#7ca2dfad];
+    }
+
+    .content pre>code>span[data-line]::before {
+        content: '';
+        @apply inline-block w-4 text-right;
+    }
+
+    .content pre>code[data-line-numbers-max-digits='2']>span[data-line]::before {
+        @apply w-8;
+    }
+
+    .content code[data-line-numbers-max-digits='3']>span[data-line]::before {
+        @apply w-12;
+    }
+}
+
+/* --- 3. Components Layer: 组件样式 --- */
+@layer components {
+
+    /* --- 通用 Apple Card 组件 (推荐用于包裹你的文章主体) --- */
+    .apple-card {
+        @apply bg-white rounded-2xl border border-black/5 shadow-sm transition-all duration-300;
+    }
+
+    .dark .apple-card {
+        @apply bg-[#1C1C1E] border-white/10 shadow-none;
+    }
+
+    /* --- iOS 风格 Markdown Alerts / Callouts --- */
+    /* 设计语言变化：
+       - 移除左侧粗边框，改为四周细边框
+       - 增加大圆角 (rounded-2xl)
+       - 增加背景透明度与毛玻璃感 (backdrop-blur)
+       - 图标改为圆形背景包裹
+    */
+
+    .markdown-alert {
+        @apply mb-6 rounded-2xl border p-4 text-[15px] leading-relaxed relative overflow-hidden transition-all duration-200 backdrop-blur-md;
+
+        /* 默认变量兜底 */
+        --alert-bg: theme('colors.gray.50');
+        --alert-border: theme('colors.gray.200');
+        --alert-text: theme('colors.gray.800');
+        --alert-icon-bg: theme('colors.gray.200');
+
+        background-color: var(--alert-bg);
+        border-color: var(--alert-border);
+        color: var(--alert-text);
+    }
+
+    /* 标题样式：全大写、字号小但加粗，类似 iOS 设置里的分组标题 */
+    .markdown-alert-title {
+        @apply flex items-center font-bold mb-3 text-xs uppercase tracking-wider opacity-80;
+    }
+
+    .markdown-alert-title>svg {
+        @apply hidden;
+    }
+
+    .markdown-alert p {
+        @apply text-inherit opacity-95 m-0;
+    }
+
+    .markdown-alert>*:last-child {
+        @apply mb-0;
+    }
+
+    /* Emoji 图标容器：圆形背景，看起来像 App Icon */
+    .markdown-alert-title::before {
+        @apply inline-flex items-center justify-center w-6 h-6 mr-2 text-sm rounded-full bg-[var(--alert-icon-bg)] not-italic shadow-sm;
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+
+    /* --- 类型定义 (配色调整为更柔和的高级色) --- */
+
+    /* 1. Important (紫色 - 类似 iOS 专注模式) 💬 */
+    .markdown-alert-important {
+        --alert-bg: rgba(245, 243, 255, 0.6);
+        --alert-border: rgba(168, 85, 247, 0.15);
+        --alert-text: #6b21a8;
+        --alert-icon-bg: #f3e8ff;
+
+        &:where(.dark, .dark *) {
+            --alert-bg: rgba(59, 7, 100, 0.4);
+            --alert-border: rgba(147, 51, 234, 0.3);
+            --alert-text: #e9d5ff;
+            --alert-icon-bg: rgba(147, 51, 234, 0.4);
+        }
+    }
+
+    .markdown-alert-important .markdown-alert-title::before {
+        content: "💬";
+    }
+
+    /* 2. Note (蓝色 - 类似 iOS 系统提示) ℹ️ */
+    .markdown-alert-note {
+        --alert-bg: rgba(239, 246, 255, 0.6);
+        --alert-border: rgba(59, 130, 246, 0.15);
+        --alert-text: #1e40af;
+        --alert-icon-bg: #dbeafe;
+
+        &:where(.dark, .dark *) {
+            --alert-bg: rgba(23, 37, 84, 0.4);
+            --alert-border: rgba(59, 130, 246, 0.3);
+            --alert-text: #bfdbfe;
+            --alert-icon-bg: rgba(37, 99, 235, 0.4);
+        }
+    }
+
+    .markdown-alert-note .markdown-alert-title::before {
+        content: "ℹ️";
+    }
+
+    /* 3. Tip (绿色 - 类似 Fitness/Health) 💡 */
+    .markdown-alert-tip {
+        --alert-bg: rgba(240, 253, 244, 0.6);
+        --alert-border: rgba(34, 197, 94, 0.15);
+        --alert-text: #15803d;
+        --alert-icon-bg: #dcfce7;
+
+        &:where(.dark, .dark *) {
+            --alert-bg: rgba(5, 46, 22, 0.4);
+            --alert-border: rgba(34, 197, 94, 0.3);
+            --alert-text: #bbf7d0;
+            --alert-icon-bg: rgba(21, 128, 61, 0.4);
+        }
+    }
+
+    .markdown-alert-tip .markdown-alert-title::before {
+        content: "💡";
+    }
+
+    /* 4. Warning (橙色 - 类似低电量模式) ⚠️ */
+    .markdown-alert-warning {
+        --alert-bg: rgba(255, 247, 237, 0.6);
+        --alert-border: rgba(249, 115, 22, 0.15);
+        --alert-text: #9a3412;
+        --alert-icon-bg: #ffedd5;
+
+        &:where(.dark, .dark *) {
+            --alert-bg: rgba(67, 20, 7, 0.4);
+            --alert-border: rgba(249, 115, 22, 0.3);
+            --alert-text: #fed7aa;
+            --alert-icon-bg: rgba(194, 65, 12, 0.4);
+        }
+    }
+
+    .markdown-alert-warning .markdown-alert-title::before {
+        content: "⚠️";
+    }
+
+    /* 5. Caution (红色 - 错误) 🛑 */
+    .markdown-alert-caution {
+        --alert-bg: rgba(254, 242, 242, 0.6);
+        --alert-border: rgba(239, 68, 68, 0.15);
+        --alert-text: #991b1b;
+        --alert-icon-bg: #fee2e2;
+
+        &:where(.dark, .dark *) {
+            --alert-bg: rgba(69, 10, 10, 0.4);
+            --alert-border: rgba(239, 68, 68, 0.3);
+            --alert-text: #fecaca;
+            --alert-icon-bg: rgba(185, 28, 28, 0.4);
+        }
+    }
+
+    .markdown-alert-caution .markdown-alert-title::before {
+        content: "🛑";
+    }
+}
+
+/* ...保留你之前的 @tailwind 和 .markdown-alert 代码... */
+
+@layer utilities {
+
+    /* 1. 优雅的入场动画 (Fade Up) 
+       Apple 的页面加载通常伴随着内容轻微上浮和透明度变化 
+    */
+    .animate-enter-content {
+        animation: enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    /* 依次延迟入场，用于列表项，制造“瀑布流”感觉 */
+    .delay-100 {
+        animation-delay: 100ms;
+    }
+
+    .delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .delay-300 {
+        animation-delay: 300ms;
+    }
+
+    @keyframes enter {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+            /* 稍微向下偏移一点点 */
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 2. 隐藏滚动条但保留功能 (Mac 风格) */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* 3. 极致的平滑字体渲染 */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* --- Global Scrollbar Styling --- */
+@media (min-width: 640px) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-gray-700;
+        border: 3px solid transparent;
+        background-clip: content-box;
+        border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-gray-600;
+    }
+}
+
+/* 4. 优化 ViewTransitions 的默认行为，让它更柔和 */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.3s;
+}

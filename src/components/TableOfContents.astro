@@ -1,0 +1,64 @@
+---
+// src/components/TableOfContents.astro
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// 过滤掉 H1 (通常是文章标题) 和过深的层级，只保留 H2 和 H3
+const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
+---
+
+<nav class="toc-container hidden lg:block sticky top-24 self-start max-h-[80vh] overflow-y-auto pr-4">
+  <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100 mb-4 uppercase tracking-wider">
+    目录
+  </h2>
+  <ul class="space-y-2 text-sm border-l border-gray-200 dark:border-gray-700">
+    {
+      toc.map((heading) => (
+        <li>
+          <a
+            href={`#${heading.slug}`}
+            class={`toc-link block py-1 pl-4 transition-colors hover:text-blue-600 dark:hover:text-blue-400 text-gray-500 dark:text-gray-400 ${
+              heading.depth === 3 ? 'ml-4' : ''
+            }`}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  // 滚动监听脚本：高亮当前阅读的标题
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute('id');
+        const link = document.querySelector(`.toc-link[href="#${id}"]`);
+        
+        if (entry.isIntersecting) {
+          // 移除其他激活状态
+          document.querySelectorAll('.toc-link').forEach((l) => {
+            l.classList.remove('text-blue-600', 'font-medium', 'border-l-2', 'border-blue-600', '-ml-[1px]');
+          });
+          // 添加激活状态
+          if (link) {
+            link.classList.add('text-blue-600', 'dark:text-blue-400', 'font-medium', 'border-l-2', 'border-blue-600', 'dark:border-blue-400', '-ml-[1px]');
+          }
+        }
+      });
+    },
+    { rootMargin: '-100px 0px -66% 0px' } // 调整触发区域
+  );
+
+  // 监听所有文章内的标题
+  document.querySelectorAll('article h2, article h3').forEach((h) => {
+    observer.observe(h);
+  });
+</script>

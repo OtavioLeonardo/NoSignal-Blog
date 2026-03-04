@@ -1,0 +1,121 @@
+---
+title: 博客模板使用教程
+series: 教程
+layout: ../../layouts/post.astro
+pubDate: 2026-03-04
+description: 这是一篇模板教程，帮助你了解如何正确使用博客的 mdoc 格式来编写文章。
+excerpt: 本文将详细介绍博客模板的各项参数配置，包括必填字段、可选字段以及使用技巧。通过阅读本教程，你将能够快速上手编写自己的博客文章。
+author: Otavio
+isPinned: true
+image:
+  src: '@/assets/images/posts/博客模板使用教程/image/src.png'
+tags:
+  - 教程
+updates:
+  - date: 2026-03-04
+    title: 初始化版本
+    content: 本教程将详细介绍 mdoc 文件的各项配置参数，帮助你快速掌握博客文章的编写方法。
+---
+## 前言
+
+欢迎使用本博客模板！本文将详细介绍如何正确编写一篇符合本博客规范的 mdoc 文章。
+
+## 头部参数说明
+
+以下是所有可用的头部参数详解：
+
+### 必填字段
+
+{% table %}
+- 字段
+- 说明
+- 示例
+---
+- `title`
+- 文章标题
+- `title: 我的第一篇文章`
+---
+- `layout`
+- 布局路径（固定）
+- `layout: ../../layouts/post.astro`
+---
+- `pubDate`
+- 发布日期（YYYY-MM-DD）
+- `pubDate: 2026-03-04`
+---
+- `author`
+- 作者名称
+- `author: Otavio`
+{% /table %}
+
+### 可选字段
+
+{% table %}
+- 字段
+- 说明
+- 示例
+---
+- `series`
+- 所属系列（用于文章关联）
+- `series: 野草`
+---
+- `description`
+- 简短描述（一句话）
+- `description: 这是一篇关于...的文章`
+---
+- `excerpt`
+- 摘要（可多行，支持换行）
+- 见下文示例
+---
+- `isPinned`
+- 是否置顶文章
+- `isPinned: true/false`
+---
+- `image`
+- 封面图片（留空则不显示）
+- `image: {}` 或 `image: /path/to/image.jpg`
+---
+- `tags`
+- 标签数组
+- `tags: [教程, 技术, 生活]`
+---
+- `updates`
+- 更新记录数组
+- 见下文示例
+{% /table %}
+
+### excerpt 字段写法
+
+```yaml
+excerpt: >-
+  这里可以写多行文字，
+  就像这样，
+ 会自动合并成一段。
+```
+
+### updates 字段写法
+
+```yaml
+updates:
+  - date: 2026-03-04
+    title: 更新标题
+    content: |-
+      更新内容第一行
+      更新内容第二行
+  - date: 2026-03-05
+    title: 第二次更新
+    content: 第二次更新的内容
+```
+
+## 系列文章
+
+如果你的文章属于某个系列，可以使用 `series` 字段将其归类。例如：
+
+- `series: 野草` - 鲁迅《野草》系列
+- `series: 圆圈正义` - 罗翔老师书籍笔记系列
+
+## 总结
+
+现在你已经掌握了博客模板的基本使用方法。开始写你的第一篇文章吧！
+
+如果有任何问题，欢迎随时查看本教程或参考其他文章的写法。

@@ -1,0 +1,47 @@
+{
+	"name": "no-signal",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/check": "0.9.6",
+		"@astrojs/markdoc": "^0.15.10",
+		"@astrojs/react": "^4.4.2",
+		"@astrojs/rss": "4.0.15",
+		"@astrojs/sitemap": "3.7.0",
+		"@astrojs/vercel": "^9.0.4",
+		"@keystatic/astro": "^5.0.6",
+		"@keystatic/core": "^0.5.48",
+		"@tailwindcss/vite": "4.1.18",
+		"@types/react": "^19.2.10",
+		"@types/react-dom": "^19.2.3",
+		"@vercel/analytics": "1.6.1",
+		"astro": "5.16.15",
+		"astro-pagefind": "^1.8.5",
+		"canvas-confetti": "1.9.4",
+		"clsx": "^2.1.1",
+		"medium-zoom": "^1.1.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"rehype-pretty-code": "0.14.1",
+		"remark-github-blockquote-alert": "^2.0.1",
+		"tailwind-merge": "^3.4.0",
+		"tailwindcss": "4.1.18",
+		"typescript": "5.9.3"
+	},
+	"devDependencies": {
+		"@pagefind/default-ui": "^1.4.0",
+		"@tailwindcss/typography": "0.5.19",
+		"pagefind": "^1.4.0",
+		"prettier": "3.8.1",
+		"prettier-plugin-astro": "0.14.1",
+		"prettier-plugin-tailwindcss": "0.7.2",
+		"rollup-plugin-visualizer": "^6.0.5"
+	}
+}
